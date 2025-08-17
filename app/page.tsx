@@ -41,10 +41,13 @@ export default function Home() {
     formData.append("file", file);
 
     try {
-      const res = await fetch("https://ai-backend-vizc.onrender.com/analyze", {
-        method: "POST",
-        body: formData,
-      });
+      const res = await fetch(
+        "https://agri-backend-production-8eb9.up.railway.app/analyze",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       const data = await res.json();
       setResult(data.message);

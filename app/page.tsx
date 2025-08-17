@@ -41,7 +41,7 @@ export default function Home() {
     formData.append("file", file);
 
     try {
-      const res = await fetch("https://ai-backend-vizc.onrender.com", {
+      const res = await fetch("https://ai-backend-vizc.onrender.com/analyze", {
         method: "POST",
         body: formData,
       });

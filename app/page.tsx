@@ -17,19 +17,16 @@ export default function Home() {
     }
   };
 
-  async function handleAnalyze() {
-    if (!file) {
-      setResult("⚠️ Please upload an image first.");
-      return;
-    }
+  const handleAnalyze = async () => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
 
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-
       const res = await fetch("https://ai-backend.onrender.com/analyze", {
         method: "POST",
-        body: formData,
+        body: formData, // send as multipart/form-data
       });
 
       const data = await res.json();
@@ -38,7 +35,7 @@ export default function Home() {
       console.error(error);
       setResult("⚠️ Error while analyzing.");
     }
-  }
+  };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800">

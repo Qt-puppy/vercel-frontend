@@ -18,7 +18,24 @@ export default function Home() {
   };
 
   const handleAnalyze = async () => {
-    if (!file) return;
+    // 1. Check if the function is even being called.
+    console.log(
+      "Analyze button clicked! The handleAnalyze function has started."
+    );
+
+    // 2. Check the value of the 'file' state right before the check.
+    console.log("The current value of the 'file' state is:", file);
+
+    if (!file) {
+      console.error(
+        "❌ No file is selected, so the function is stopping here."
+      );
+      setResult("Please select a file first."); // Give user feedback
+      return; // This stops the function before the fetch call
+    }
+
+    // If the code reaches here, it means a file is selected.
+    console.log("✅ A file is selected. Proceeding to fetch...");
 
     const formData = new FormData();
     formData.append("file", file);
@@ -26,13 +43,13 @@ export default function Home() {
     try {
       const res = await fetch("https://ai-backend.onrender.com/analyze", {
         method: "POST",
-        body: formData, // send as multipart/form-data
+        body: formData,
       });
 
       const data = await res.json();
       setResult(data.message);
     } catch (error) {
-      console.error(error);
+      console.error("Fetch failed:", error);
       setResult("⚠️ Error while analyzing.");
     }
   };
